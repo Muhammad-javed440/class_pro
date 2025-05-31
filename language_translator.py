@@ -356,13 +356,13 @@ indonesian_agent = Agent(
 triage_agent = Agent(
     name="Triage Agent",
     instructions="You determine which agent to use based on the user's homework question",
-    handoffs=[urdu_agent,english_agent,spanish_agent,arabic_agent,german_agent,hindi_agent,russian_agent,
-              italian_agent,chinies_agent,japanese_agent,bangali_agent,nepali_agent,punjabi_agent,korean_agent,
-              albanian_agent,turkish_agent,pashto_agent,gujarati_agent,french_agent,latin_agent,persian_agent,
-              filipino_agent,danish_agent,dari_agent,bosnian_agent,catalan_agent,croatian_agent,finnish_agent,
-              georgian_agent,icelandic_agent,hungarian_agent,kazakh_agent,latvian_agent,dutch_agent,malay_agent,
-              serbian_agent,somali_agent,tagalog_agent,tamil_agent,thai_agent,vietnamese_agent,welsh_agent,merathi_agent,
-              ukrainian_agent,yiddish_agent,indonesian_agent
+    handoffs=[urdu_agent, english_agent, spanish_agent, arabic_agent, german_agent, hindi_agent, russian_agent,
+              italian_agent, chinies_agent, japanese_agent, bangali_agent, nepali_agent, punjabi_agent, korean_agent,
+              albanian_agent, turkish_agent, pashto_agent, gujarati_agent, french_agent, latin_agent, persian_agent,
+              filipino_agent, danish_agent, dari_agent, bosnian_agent, catalan_agent, croatian_agent, finnish_agent,
+              georgian_agent, icelandic_agent, hungarian_agent, kazakh_agent, latvian_agent, dutch_agent, malay_agent,
+              serbian_agent, somali_agent, tagalog_agent, tamil_agent, thai_agent, vietnamese_agent, welsh_agent, merathi_agent,
+              ukrainian_agent, yiddish_agent, indonesian_agent
               ]
 )
 

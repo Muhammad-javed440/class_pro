@@ -1,13 +1,15 @@
 import os
 from dotenv import load_dotenv, find_dotenv
-from agents import Agent, Runner, OpenAIChatCompletionsModel,set_tracing_disabled, AsyncOpenAI
+from agents import Agent, Runner, OpenAIChatCompletionsModel,set_tracing_disabled, AsyncOpenAI, function_tool
 import chainlit as cl
 from openai.types.responses import ResponseTextDeltaEvent
+from tavily import TavilyClient
 
 set_tracing_disabled(disabled=True)
                
 load_dotenv(find_dotenv())
 
+travily_api_key=os.getenv("TRAVILY_API_KEY")
 gemini_api_key=os.getenv("GEMINI_API_KEY")
 
 
@@ -23,9 +25,35 @@ model = OpenAIChatCompletionsModel(
     openai_client = provider,
 )
 
-
+@function_tool
+def websearch_tool(query:str)->str:
+    """Search online for the given query"""
+    
+    tavily_client=TavilyClient(api_key=travily_api_key)
+    response=tavily_client.search(query)
+    return response
 
 # Step-4: Agent
+
+User_Authentication_Agent = Agent(
+    name="User Authentication Agent",
+    handoff_description="Specialist Agent for User Authentication .",
+    model=model,
+    instructions="""
+                 Tech Stack
+                 Framework: Next.js (App Router)
+
+                 Database: PostgreSQL / MongoDB (via Prisma, Mongoose, or raw queries)
+
+                 Password Hashing: bcrypt
+
+                 Token Management: jsonwebtoken (JWT)
+
+                 Environment Variables: .env
+                 """
+                 )
+
+
 frontend_agent = Agent(
     name="frontend developer",
     model=model,
@@ -56,12 +84,22 @@ stripe_agent=Agent(
     instructions="You provide help stripe payement integration to get payment from users."
 )
 
+debugging_agent = Agent(
+    name="Debugging Agent",
+    model=model,
+    instructions="You are the debugging agent cheack the hole process carefully and then show the result.",
+    handoff_description="Specialist Agent for drbugging from the hole process."
+)
+
 triage_agent = Agent(
     name="Triage Agent",
     model=model,
-    instructions="You determine which agent to use based on the user's homework question",
-    handoffs=[frontend_agent, backend_agent,stripe_agent]
+    instructions="You determine which agent to use based on the user's homework question and also you can search online if needed",
+    handoffs=[ frontend_agent, backend_agent, stripe_agent],
+    tools=[websearch_tool]
 )
+
+
 
 # Step-5: Start chat
 

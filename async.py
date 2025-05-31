@@ -40,7 +40,7 @@ async def main(message: cl.Message):
 
     # Show something on the screen
     msg = cl.Message(
-        content="",
+        content="Thinking.....",
     )
     await msg.send()
 
